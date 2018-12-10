@@ -406,17 +406,17 @@ func (j *Job) HasQueuedBuild() {
 func (j *Job) InvokeSimple(params map[string]string) (*http.Response, error) {
 	isQueued, err := j.IsQueued()
 	if err != nil {
-		return 0, err
+		return nil, err
 	}
 	if isQueued {
 		Error.Printf("%s is already running", j.GetName())
-		return 0, nil
+		return nil, nil
 	}
 
 	endpoint := "/build"
 	parameters, err := j.GetParameters()
 	if err != nil {
-		return 0, err
+		return nil, err
 	}
 	if len(parameters) > 0 {
 		endpoint = "/buildWithParameters"
@@ -427,26 +427,26 @@ func (j *Job) InvokeSimple(params map[string]string) (*http.Response, error) {
 	}
 	resp, err := j.Jenkins.Requester.Post(j.Base+endpoint, bytes.NewBufferString(data.Encode()), nil, nil)
 	if err != nil {
-		return 0, err
+		return nil, err
 	}
 
 	if resp.StatusCode != 200 && resp.StatusCode != 201 {
-		return 0, fmt.Errorf("Could not invoke job %q: %s", j.GetName(), resp.Status)
+		return nil, fmt.Errorf("Could not invoke job %q: %s", j.GetName(), resp.Status)
 	}
 
 	location := resp.Header.Get("Location")
 	if location == "" {
-		return 0, errors.New("Don't have key \"Location\" in response of header")
+		return nil, errors.New("Don't have key \"Location\" in response of header")
 	}
 
 	u, err := url.Parse(location)
 	if err != nil {
-		return 0, err
+		return nil, err
 	}
 
 	number, err := strconv.ParseInt(path.Base(u.Path), 10, 64)
 	if err != nil {
-		return 0, err
+		return nil, err
 	}
 
 	return resp, nil
