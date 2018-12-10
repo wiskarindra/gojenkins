@@ -444,7 +444,7 @@ func (j *Job) InvokeSimple(params map[string]string) (*http.Response, error) {
 		return nil, err
 	}
 
-	number, err := strconv.ParseInt(path.Base(u.Path), 10, 64)
+	_, err := strconv.ParseInt(path.Base(u.Path), 10, 64)
 	if err != nil {
 		return nil, err
 	}
