@@ -253,7 +253,7 @@ func (j *Jenkins) DeleteJob(name string) (bool, error) {
 
 // Invoke a job.
 // First parameter job name, second parameter is optional Build parameters.
-func (j *Jenkins) BuildJob(name string, options ...interface{}) (int64, error) {
+func (j *Jenkins) BuildJob(name string, options ...interface{}) (*http.Response, error) {
 	job := Job{Jenkins: j, Raw: new(JobResponse), Base: "/job/" + name}
 	var params map[string]string
 	if len(options) > 0 {
