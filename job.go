@@ -20,7 +20,6 @@ import (
 	"errors"
 	"fmt"
 	"net/url"
-	"net/http"
 	"path"
 	"strconv"
 	"strings"
