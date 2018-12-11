@@ -403,7 +403,7 @@ func (j *Job) HasQueuedBuild() {
 	panic("Not Implemented yet")
 }
 
-func (j *Job) InvokeSimple(params map[string]string) (*http.Response, error) {
+func (j *Job) InvokeSimple(params map[string]string) (*Job, error) {
 	isQueued, err := j.IsQueued()
 	if err != nil {
 		return nil, err
@@ -449,7 +449,7 @@ func (j *Job) InvokeSimple(params map[string]string) (*http.Response, error) {
 		return nil, err
 	}
 
-	return resp, nil
+	return j, nil
 }
 
 func (j *Job) Invoke(files []string, skipIfRunning bool, params map[string]string, cause string, securityToken string) (bool, error) {
