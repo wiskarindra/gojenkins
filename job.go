@@ -443,7 +443,7 @@ func (j *Job) InvokeSimple(params map[string]string) (*Job, int64, error) {
 		return nil, 0, err
 	}
 
-	queueID, err = strconv.ParseInt(path.Base(u.Path), 10, 64)
+	queueID, err := strconv.ParseInt(path.Base(u.Path), 10, 64)
 	if err != nil {
 		return nil, 0, err
 	}
